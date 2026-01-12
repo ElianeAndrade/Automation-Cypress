@@ -1,0 +1,50 @@
+Para rodar sem abrir o navegador (headless) e escolhendo cenarios
+npx cypress run --spec "cypress/e2e/telaATS.cy.js" --env AMBIENTE=stg
+
+*****
+Para rodar o teste com a interface do Cypress (modo interativo), e escolher o cenario na interface, use:
+npx cypress open --browser electron --env AMBIENTE=stg
+
+
+
+****
+Para rodar em prod ou stg:
+npx cypress run --browser electron --env AMBIENTE=hom
+npx cypress run --browser electron --env AMBIENTE=stg
+npx cypress run --browser electron --env AMBIENTE=prd
+
+
+
+****
+Para rodar deforma mais otimizada nos comandos (puxando do package.json)
+npm run cy:run:stg OU npm run cy:run:stg -- --spec "cypress/e2e/login.cy.js"
+
+
+****
+Para limpar cache do cypressn
+npx cypress cache clear
+
+
+
+
+
+
+
+
+
+
+
+
+*****
+Comandos mais usados
+1. cy.visit(url)
+Abre uma URL — como se vc digitasse no navegador.
+
+2. cy.get(seletor)
+Pega um elemento do HTML (igual no CSS).
+Exemplos:
+cy.get('#idDoElemento') → pega pelo ID
+cy.get('.classe') → pega pela classe
+cy.get('input[name="email"]') → pega pelo atributo
+cy.get('button[type="submit"]') → pega o botão de envio
+

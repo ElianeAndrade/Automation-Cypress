@@ -1,0 +1,81 @@
+# =========================================
+# CYPRESS + NODE + JAVASCRIPT + TYPESCRIPT
+# =========================================
+
+# Logs e cache
+logs
+.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Node modules
+node_modules
+package-lock.json
+
+# Cypress outputs
+cypressvideos
+cypressscreenshots
+cypressdownloads
+
+# Arquivos temporários
+.tmp
+.temp
+.swp
+.DS_Store
+Thumbs.db
+
+# Sistema operacional
+ehthumbs.db
+Icon
+desktop.ini
+
+# Configurações locais de IDE
+.vscode
+.idea
+.sublime-project
+.sublime-workspace
+
+# Build e dist
+dist
+build
+coverage
+out
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# TypeScript
+.tsbuildinfo
+
+# Testes de snapshot (opcional)
+cypresssnapshots
+__snapshots__
+
+# Relatórios
+reports
+mochawesome-report
+mochawesome-report.json
+mochawesome-report.html
+mochawesome-reportassets
+allure-results
+allure-report
+
+# Cache do Cypress
+.cypress-cache
+.cache
+
+# Arquivos de sistema do Mac e Windows
+.bak
+.orig
+
+node_modules/
+cypress/videos/
+cypress/screenshots/
+
+node_modules/
