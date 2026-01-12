@@ -11,8 +11,8 @@ Azure DevOps (integração de pipeline)
 
 
 🖥️ **Como Rodar Localmente**
-1-Clonar o repositório: https://dev.azure.com/AzureDevOps-BNE/BNE/_git/automacao_QA
-2-Instalar dependências:
+1-Clonar o repositório;
+2-Instalar dependências;
 2.1-Antes de rodar os testes, é necessário ter o Node.js instalado.
 2.2-Em seguida, instale as dependências do projeto com: npm install
 3-Caso algo falhe na instalação, rode novamente npm install e verifique se o Cypress foi instalado corretamente com: npx cypress verify
@@ -27,13 +27,13 @@ Modo Headless (oculto)
 Para rodar os testes sem abrir a interface, escolhendo o ambiente: npx cypress run --browser electron --env AMBIENTE=stg
 
 ⚙️**Execução na Pipeline (Azure DevOps)**
-A automação também pode ser executada diretamente pela pipeline:  https://dev.azure.com/AzureDevOps-BNE/BNE/_build?definitionId=810
-Basta clicar em Run pipeline, escolher o ambiente e o cenário desejado, a execução será feita automaticamente.
+A automação também pode ser executada diretamente pela pipeline. Esse projeto roda em uma pipeline privada. 
+Para rodar basta clicar em Run pipeline, escolher o ambiente e o cenário desejado, a execução será feita automaticamente, no entanto, a pipelina não está anexado a esse código por motivos de privacidade.
 
 
 
 🌿 **Branch Disponível**
-Atualmente o projeto está disponível na branch: eliane_qa
+Atualmente o projeto está disponível na Main
 
 
 
