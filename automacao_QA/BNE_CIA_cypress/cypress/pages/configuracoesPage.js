@@ -7,7 +7,7 @@ class ConfiguracoesPage {
         loginPage.clicarEntrarEmpresa();
         loginPage.loginValido();
 
-        cy.xpath('(//div[@class="options__card"])[5]').click();
+        cy.xpath('//div[@class="options__card is-config is-service"]').click();
         cy.get('.company__tag', { timeout: 10000 }).should('be.visible');
     }
 

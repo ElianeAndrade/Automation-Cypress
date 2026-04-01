@@ -7,9 +7,9 @@ class MeusCurriculos {
         LoginPage.loginValido();
 
         // Clica em Meus Currículos
-        cy.xpath('(//div[@class="options__card"])[4]').click();
+        cy.xpath('(//div[@class="options__card is-service"])[4]').click();
 
-        // 1️⃣ Espera até algum dos estados existir (SEM comandos Cypress dentro)
+        // 1️⃣ Espera até algum dos estados existir
         cy.get('body', { timeout: 10000 }).should($body => {
             const temBusca = $body.find('.first__search.flex.flex-col').length > 0;
             const temResultado = $body.find('.new-result-display.ng-star-inserted').length > 0;
@@ -17,7 +17,7 @@ class MeusCurriculos {
             expect(temBusca || temResultado).to.be.true;
         });
 
-        // 2️⃣ Decide o fluxo (AGORA pode usar cy.*)
+        // 2️⃣ Decide o fluxo 
         cy.get('body').then($body => {
             if ($body.find('.first__search.flex.flex-col').length > 0) {
                 cy.get('#main__search--input')
@@ -28,7 +28,7 @@ class MeusCurriculos {
             }
         });
 
-        // 3️⃣ Valida o estado final (sempre termina aqui)
+        // 3️⃣ Valida o estado final
         cy.get('.new-result-display.ng-star-inserted', { timeout: 10000 })
           .should('be.visible');
     }

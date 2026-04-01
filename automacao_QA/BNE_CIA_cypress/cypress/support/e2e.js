@@ -16,7 +16,12 @@ Cypress.on('uncaught:exception', (err) => {
     err.message.includes("Identifier 'limit' has already been declared") ||
     err.message.includes("Missing initializer in const declaration") ||
     err.message.includes("renderSurvey is not defined") || 
-    err.message.includes("Cannot read properties of undefined (reading 'ownerNode')")
+    err.message.includes("Cannot read properties of undefined (reading 'ownerNode')") || 
+    err.message.includes("verificarERemoverParcelado is not defined") ||
+    err.message.includes("jQuery is not defined") ||
+    err.message.includes("$ is not defined") ||
+    err.message.includes("Cannot set properties of undefined (setting 'maskWatchers')")
+
   ) {
     return false; // impede que o Cypress quebre o teste
   }

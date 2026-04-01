@@ -4,7 +4,26 @@ import users from "../fixtures/users.json";
 
 describe('Fluxo de Pesquisa no BNE', () => {
     it('Deve pesquisar um currículo com sucesso', () => {
-        pesquisarCurriculoBNEPage.PesquisarEclicarNoCurriculo();
+        pesquisarCurriculoBNEPage.PesquisarBNE();
+        pesquisarCurriculoBNEPage.DescartarSalvamentoFiltro();
+        pesquisarCurriculoBNEPage.SucessoNaPesquisaCurriculo();
+    });
+
+    it('Deve salvar um filtro de pesquisa', () => {
+        pesquisarCurriculoBNEPage.SalvarFiltro();
+        pesquisarCurriculoBNEPage.DeletandoFiltroTeste();
+    });
+
+    it('Deve renomear um filtro salvo', () => {
+        pesquisarCurriculoBNEPage.RenomearFiltroSalvo();
+    });
+
+    it('Deve deletar um filtro salvo', () => {
+        pesquisarCurriculoBNEPage.DeletandoFitroSalvo();
+    });
+
+    it('Deve atualizar um filtro salvo', () => {    
+        pesquisarCurriculoBNEPage.AtualizarFiltroSalvo();
     });
 
     it('Deve visualizar os dados de contato do currículo', () => {

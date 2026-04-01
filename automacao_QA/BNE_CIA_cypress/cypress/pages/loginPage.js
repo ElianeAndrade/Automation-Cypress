@@ -13,7 +13,16 @@ class LoginPage {
       ? Cypress.env('STG_URL')
       : Cypress.env('PROD_URL');
 
-    cy.visit(url);
+    cy.visit(url, {
+      onBeforeLoad(win) {
+        // limpa antes da aplicação carregar
+        win.localStorage.clear();
+        win.sessionStorage.clear();
+      }
+    });
+
+    // limpa cookies após carregar
+    cy.clearAllCookies();
   }
 
   preencherLogin(email, senha) {

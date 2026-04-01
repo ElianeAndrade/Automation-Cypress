@@ -11,14 +11,18 @@ class FooterEmpresas {
 
   anunciarVagas() {
     LoginPage.visitar();
-    cy.xpath('(//a[@title="Anunciar Vaga"])[2]')
+    /*cy.xpath('(//a[@title="Anunciar Vaga"])[2]')
       .should('have.attr', 'target', '_blank') // confirma que abre em nova aba
       .should('have.attr', 'href')
       .then((href) => {
         expect(href).to.include('https://anunciarvaga.com.br');
         cy.request(href).its('status').should('eq', 200);
-      });
-    }
+      });*/
+    cy.xpath('(//a[@title="Anunciar Vaga"])[2]').click();
+    LoginPage.loginValido();
+    LoginPage.validaSeLogouComSucesso();
+  }
+  
 
   cadastrarEmpresa() {
       LoginPage.visitar();

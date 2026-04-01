@@ -48,3 +48,13 @@ cy.get('.classe') → pega pela classe
 cy.get('input[name="email"]') → pega pelo atributo
 cy.get('button[type="submit"]') → pega o botão de envio
 
+3. Exemplo de before pra limpar cache, no arquivo cy
+describe('Valida redirecionamentos footer - Empresas', () => {
+beforeEach(() => {
+  cy.visit('/', {
+    onBeforeLoad(win) {
+      win.localStorage.clear();
+      win.sessionStorage.clear();
+    }
+  });
+

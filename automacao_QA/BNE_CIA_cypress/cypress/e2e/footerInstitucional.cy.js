@@ -1,6 +1,6 @@
 import LoginPage from '../pages/loginPage'
 import users from '../fixtures/users.json'
-import FooterInstitucional from '../pages/footerInstitucional'
+import FooterInstitucional from '../pages/footerInstitucionalPage'
 
 describe('Valida redirecionamentos footer - Institucional', () => {
   /*it('Sobre o BNE', () => {

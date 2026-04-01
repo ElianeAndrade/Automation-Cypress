@@ -7,19 +7,20 @@ class TelaATSPage {
   clicarAnunciarVaga() {
     LoginPage.visitar();
     cy.contains('Para empresas', { timeout: 10000 }).click();
-    cy.xpath('(//a[@title="Anunciar Vaga"])[1]').click();
+    cy.xpath('(//a[@title="Anunciar Vaga"])[2]').click();
     cy.wait(5000);
     LoginPage.loginValido();
     cy.wait(5000);
 
-    cy.get('body').then(($body) => {
-      if ($body.find('.filter-tab.active.active--bne').length > 0) {
-        cy.log('Já está logado na tela ATS nas vagas criadas.');
-      } else {
-        cy.contains('Detalhes do cargo', { timeout: 10000 }).should('be.visible');
-        cy.log('Está na tela ATS para criar vaga.');
-      }
-    });
+    //valida se a página do ATS abriu 
+    cy.xpath('//div[@class="options__card is-service"][1]').click();
+    //valida se abriu a aba ativas
+    cy.get('.filter-tab.active.active--bne', { timeout: 10000 }).should('be.visible');
+    //valida se toda a pagina esta ok
+    cy.get('.page__content', { timeout: 10000 }).should('be.visible');
+    //valida se possui pelo menos uma vaga publicada
+    cy.xpath('(//div[@class="status-button true"])[1]', { timeout: 10000 }).should('be.visible');
+    cy.request('https://www.bne.com.br/ats/jobs').its('status').should('eq', 200);
   }
 }
 

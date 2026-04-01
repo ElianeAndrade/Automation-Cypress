@@ -1,46 +1,46 @@
 import LoginPage from '../pages/loginPage'
 import users from '../fixtures/users.json'
-import footerEmpresas from '../pages/footerEmpresas'
+import FooterEmpresas from '../pages/footerEmpresasPage'
 
 describe('Valida redirecionamentos footer - Empresas', () => {
+  it('Pesquisar Curriculos', () => {
+    FooterEmpresas.pesquisarCurriculos();
+  })
+
   it('Admissao Digital', () => {
-    footerEmpresas.admissaoDigital();
+    FooterEmpresas.admissaoDigital();
   })
 
   it('Anunciar Vagas', () => {
-    footerEmpresas.anunciarVagas();
+    FooterEmpresas.anunciarVagas();
   })
 
   it('Cadastrar Empresa', () => {
-    footerEmpresas.cadastrarEmpresa();
+    FooterEmpresas.cadastrarEmpresa();
   })
 
   it('Gestao Processo Seletivo', () => {
-    footerEmpresas.gestaoProcessoSeletivo();
+    FooterEmpresas.gestaoProcessoSeletivo();
   })
 
   it('Minhas Vagas', () => {
-    footerEmpresas.minhasVagas();
-  })
-
-  it('Pesquisar Curriculos', () => {
-    footerEmpresas.pesquisarCurriculos();
+    FooterEmpresas.minhasVagas();
   })
 
   it('Planos', () => {
-    footerEmpresas.planos();
+    FooterEmpresas.planos();
   })
 
   it('Sala Selecionadora', () => {
-    footerEmpresas.salaSelecionadora();
+    FooterEmpresas.salaSelecionadora();
   })
 
-  it('Seja Parceiro',  () => {
-    footerEmpresas.sejaParceiro();
+  it('Seja Parceiro', () => {
+    FooterEmpresas.sejaParceiro();
   })
 
   it('Site Trabalhe Conosco', () => {
-    footerEmpresas.siteTrabalheConosco();
+    FooterEmpresas.siteTrabalheConosco();
   })
 
 })

@@ -7,7 +7,7 @@ class TrabalheConosco {
         LoginPage.loginValido();
 
         //busca curriculo
-        cy.xpath('(//div[@class="options__card"])[3]',).click();
+        cy.xpath('(//div[@class="options__card is-service"])[3]',).click();
         cy.get('.panel__title', { timeout: 10000 }).should('be.visible');
     }
 

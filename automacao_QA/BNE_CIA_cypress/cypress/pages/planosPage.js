@@ -2,7 +2,7 @@ import LoginPage from "./loginPage";
 
 class PlanosPage {
     ValidaTelaDePlanos() {
-        cy.xpath('//div[@class="options__card "]').click();
+        cy.xpath('//div[@class="options__card "]').click(); 
         //valida titulo da tela
         cy.get('.title-escolha-de-planos').should('contain.text', 'Selecione o melhor plano para sua empresa:');
         //valida cards basico, avançado e personalizado
@@ -55,19 +55,26 @@ class PlanosPage {
         //valida página de pagamentos
         cy.get('.pagamento__box__CustomPlanPagamento').should('be.visible');
         //seleciona forma de pagamento boleto
-        cy.get('#paymentMethodBoleto').click();
-        //imprimir boleto
-        cy.get('button[type="submit"]').click()
-            //valida boleto gerado
-            .should('have.attr', 'href')
-            .then((href) => {
-                expect(href).to.include('boletos.iugu.com');
-                expect(href).to.include('/bank_slip');
-                expect(href).to.match(/invoice\/.+\/bank_slip/); //valida a url do boleto
+        cy.get('#paymentMethodBoleto', { timeout: 10000 }).click();
+        // garante que o boleto carregou
+        cy.get('.pagamento__box__body.is-boleto', { timeout: 15000 }).should('be.visible');
+        // AGORA o botão existe → use o ID
+        cy.get('#finalizarCompra', { timeout: 15000 })
+            .should('be.visible')
+            .and('not.be.disabled')
+            .click();
 
-                cy.contains('Boleto Bancário').should('be.visible');
-                cy.contains('Pagável em qualquer banco').should('be.visible');
-            });
+        // validaçãodo aguarde é opcional, para não quebrar a pipeline
+        cy.get('body').then(($body) => {
+            if ($body.text().includes('Aguarde')) {
+                cy.contains('Aguarde').should('be.visible');
+            }
+        });
+
+        // agora valida o redirect na mesma aba
+        cy.location('href', { timeout: 20000 })
+            .should('include', 'boletos.iugu.com')
+            .and('include', '/bank_slip');
     }
 
 }

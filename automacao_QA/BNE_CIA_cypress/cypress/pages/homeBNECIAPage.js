@@ -29,7 +29,7 @@ class HomeBNECIAPage {
 
   cadastreSuaEmpresa() {
     this.irparaHomeBNECIA();
-    cy.xpath('(//a[@class="register_company"])[1]', { timeout: 10000 }).click();
+    cy.xpath('(//a[@class="register_company"])[2]', { timeout: 10000 }).click();
     cy.get('.card', { timeout: 10000 }).should('be.visible');
   }
 

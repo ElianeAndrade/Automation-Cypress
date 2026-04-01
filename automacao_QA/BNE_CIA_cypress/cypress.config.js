@@ -12,7 +12,8 @@ module.exports = defineConfig({
 
     supportFile: 'cypress/support/e2e.js',
     chromeWebSecurity: false,
-    numTestsKeptInMemory: 10,
+    numTestsKeptInMemory: 1,
+    experimentalMemoryManagement: true,
     defaultCommandTimeout: 30000, 
     viewportWidth: 1366,
     viewportHeight: 768,
@@ -28,6 +29,8 @@ module.exports = defineConfig({
       overwrite: false,
       html: true,
       json: true,
+      embeddedScreenshots: true,
+      inlineAssets: true
     },
   },
 })

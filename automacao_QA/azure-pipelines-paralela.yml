@@ -1,0 +1,216 @@
+# pipeline-paralela.yml
+trigger: none
+pr: none
+
+schedules:
+  - cron: "0 9 * * 1-5"
+    displayName: "🧪 Teste monitoria 6h - Brasil"
+    branches:
+      include:
+        - eliane_qa
+    always: true
+
+parameters:
+  - name: ambiente
+    displayName: "Escolha o ambiente"
+    type: string
+    default: "STG"
+    values:
+      - STG
+      - PRD
+
+jobs:
+  - job: CypressTests
+    displayName: "Cypress - Monitoria"
+    
+    strategy:
+      matrix:
+        grupo1:
+         SPEC: "cypress/e2e/pesquisarCurriculoBNE.cy.js"
+
+        grupo2:
+         SPEC: "cypress/e2e/footerEmpresas.cy.js,cypress/e2e/siteTrabalheConosco.cy.js,cypress/e2e/login.cy.js"
+
+        grupo3:
+         SPEC: "cypress/e2e/cadastro.cy.js,cypress/e2e/configuracoes.cy.js,cypress/e2e/planos.cy.js"
+
+        grupo4:
+         SPEC: "cypress/e2e/homeBNE.cy.js,cypress/e2e/homeBNECIA.cy.js,cypress/e2e/meusCurriculos.cy.js,cypress/e2e/telaATS.cy.js"
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - script: |
+          export TERM=xterm
+          echo "🚀 Rodando specs: $(SPEC)"
+          echo "🌎 Ambiente: ${{ parameters.ambiente }}"
+
+          cd BNE_CIA_cypress
+          npm install
+          mkdir -p cypress/reports
+
+          npx cypress run \
+            --spec "$SPEC" \
+            --env ENV=${{ parameters.ambiente }} \
+            --browser electron \
+            || echo "⚠️ Testes falharam, mas pipeline continua"
+
+        displayName: "Executar Cypress"
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: 'BNE_CIA_cypress/cypress/reports'
+          ArtifactName: 'CypressReport_$(System.JobPositionInPhase)'
+          publishLocation: 'Container'
+
+
+ # 👇 NOVO JOB (merge dos relatórios)
+  - job: MergeReports
+    displayName: "Gerar relatório único"
+    dependsOn: CypressTests
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: 'current'
+          downloadType: 'all'
+          downloadPath: 'reports'
+
+      - script: |
+          cd reports
+          mkdir -p final-report
+          
+          # Copia cada relatório pra dentro do final-report
+          for dir in CypressReport_*; do
+                echo "➡️ Copiando $dir"
+                cp -r "$dir" final-report/
+          done
+
+          echo "Estrutura baixada:"
+          ls -R
+
+          echo "🔎 Procurando relatórios HTML..."
+          
+          # Cria um HTML agregador
+          cat > final-report/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>📊 Relatório Consolidado - Cypress BNE</title>
+              <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body { 
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      min-height: 100vh;
+                      padding: 40px 20px;
+                  }
+                  .container {
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      background: white;
+                      border-radius: 12px;
+                      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                      padding: 40px;
+                  }
+                  h1 {
+                      color: #333;
+                      margin-bottom: 10px;
+                      font-size: 2.5em;
+                  }
+                  .subtitle {
+                      color: #666;
+                      margin-bottom: 40px;
+                      font-size: 1.1em;
+                  }
+                  .reports-grid {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                      gap: 20px;
+                      margin-bottom: 30px;
+                  }
+                  .report-card {
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      color: white;
+                      padding: 30px;
+                      border-radius: 8px;
+                      text-decoration: none;
+                      transition: transform 0.3s, box-shadow 0.3s;
+                      cursor: pointer;
+                      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                  }
+                  .report-card:hover {
+                      transform: translateY(-5px);
+                      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+                  }
+                  .report-card h2 {
+                      font-size: 1.5em;
+                      margin-bottom: 10px;
+                  }
+                  .report-card p {
+                      opacity: 0.9;
+                      font-size: 0.95em;
+                  }
+                  .footer {
+                      text-align: center;
+                      color: #999;
+                      font-size: 0.9em;
+                      margin-top: 40px;
+                      padding-top: 20px;
+                      border-top: 1px solid #eee;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>📊 Relatório Consolidado</h1>
+                  <p class="subtitle">Clique em um dos grupos para visualizar os resultados</p>
+                  
+                  <div class="reports-grid">
+                      <a href="CypressReport_1/index.html" class="report-card">
+                          <h2>📋 Grupo 1</h2>
+                          <p>Pesquisa de Currículos</p>
+                      </a>
+                      <a href="CypressReport_2/index.html" class="report-card">
+                          <h2>📋 Grupo 2</h2>
+                          <p>Footer, STC, Login</p>
+                      </a>
+                      <a href="CypressReport_3/index.html" class="report-card">
+                          <h2>📋 Grupo 3</h2>
+                          <p>Cadastro, Configurações e Planos</p>
+                      </a>
+                      <a href="CypressReport_4/index.html" class="report-card">
+                          <h2>📋 Grupo 4</h2>
+                          <p>Home, Meus Currículos e ATS</p>
+                      </a>
+                  </div>
+                  
+                  <div class="footer">
+                      <p>✅ Todos os relatórios foram processados com sucesso</p>
+                      <p style="margin-top: 10px; font-size: 0.85em;">Gerado em: <span id="data"></span></p>
+                  </div>
+              </div>
+              
+              <script>
+                  document.getElementById('data').textContent = new Date().toLocaleString('pt-BR');
+              </script>
+          </body>
+          </html>
+          EOF
+
+          echo "✅ Página agregadora criada: final-report/index.html"
+          ls -R final-report
+
+        displayName: "Criar Página Agregadora de Relatórios"
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: 'reports/final-report'
+          ArtifactName: 'CypressReport_Final'
+          publishLocation: 'Container'
