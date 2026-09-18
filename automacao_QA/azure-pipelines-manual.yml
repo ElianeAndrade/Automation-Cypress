@@ -22,12 +22,12 @@ parameters:
       - grupo-monitoramento-4
       - login.cy.js
       - cadastro.cy.js
-      - homeBNE.cy.js
-      - homeBNECIA.cy.js
+      - homeNome_Instituição.cy.js
+      - homeNome_InstituiçãoCIA.cy.js
       - telaATS.cy.js
       - footerEmpresas.cy.js
       - footerInstitucional.cy.js
-      - pesquisarCurriculoBNE.cy.js
+      - pesquisarCurriculoNome_Instituição.cy.js
       - siteTrabalheConosco.cy.js
       - meusCurriculos.cy.js
       - configuracoes.cy.js
@@ -41,12 +41,12 @@ steps:
       export TERM=xterm
       echo "=== Rodando: ${{ parameters.cenario }} | Ambiente: ${{ parameters.ambiente }} ==="
 
-      cd BNE_CIA_cypress
+      cd Nome_Instituição_cypress
       npm install
       mkdir -p cypress/reports
 
       if [ "${{ parameters.cenario }}" = "grupo-monitoramento-1" ]; then
-        SPEC="cypress/e2e/pesquisarCurriculoBNE.cy.js"
+        SPEC="cypress/e2e/pesquisarCurriculoNome_Instituição.cy.js"
 
       elif [ "${{ parameters.cenario }}" = "grupo-monitoramento-2" ]; then
         SPEC="cypress/e2e/footerEmpresas.cy.js,cypress/e2e/siteTrabalheConosco.cy.js,cypress/e2e/login.cy.js"
@@ -55,7 +55,7 @@ steps:
         SPEC="cypress/e2e/cadastro.cy.js,cypress/e2e/configuracoes.cy.js,cypress/e2e/planos.cy.js"
 
       elif [ "${{ parameters.cenario }}" = "grupo-monitoramento-4" ]; then
-        SPEC="cypress/e2e/homeBNE.cy.js,cypress/e2e/homeBNECIA.cy.js,cypress/e2e/meusCurriculos.cy.js,cypress/e2e/telaATS.cy.js"
+        SPEC="cypress/e2e/homeNome_Instituição.cy.js,cypress/e2e/homeNome_InstituiçãoCIA.cy.js,cypress/e2e/meusCurriculos.cy.js,cypress/e2e/telaATS.cy.js"
 
       else
         SPEC="cypress/e2e/${{ parameters.cenario }}"
@@ -74,6 +74,6 @@ steps:
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: 'BNE_CIA_cypress/cypress/reports'
+      PathtoPublish: 'Nome_Instituição_cypress/cypress/reports'
       ArtifactName: 'CypressReport'
       publishLocation: 'Container'

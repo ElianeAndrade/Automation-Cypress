@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         grupo1:
-         SPEC: "cypress/e2e/pesquisarCurriculoBNE.cy.js"
+         SPEC: "cypress/e2e/pesquisarCurriculoNome_Instituição.cy.js"
 
         grupo2:
          SPEC: "cypress/e2e/footerEmpresas.cy.js,cypress/e2e/siteTrabalheConosco.cy.js,cypress/e2e/login.cy.js"
@@ -35,7 +35,7 @@ jobs:
          SPEC: "cypress/e2e/cadastro.cy.js,cypress/e2e/configuracoes.cy.js,cypress/e2e/planos.cy.js"
 
         grupo4:
-         SPEC: "cypress/e2e/homeBNE.cy.js,cypress/e2e/homeBNECIA.cy.js,cypress/e2e/meusCurriculos.cy.js,cypress/e2e/telaATS.cy.js"
+         SPEC: "cypress/e2e/homeNome_Instituição.cy.js,cypress/e2e/homeNome_InstituiçãoCIA.cy.js,cypress/e2e/meusCurriculos.cy.js,cypress/e2e/telaATS.cy.js"
 
     pool:
       vmImage: 'ubuntu-latest'
@@ -46,7 +46,7 @@ jobs:
           echo "🚀 Rodando specs: $(SPEC)"
           echo "🌎 Ambiente: ${{ parameters.ambiente }}"
 
-          cd BNE_CIA_cypress
+          cd Nome_Instituição_cypress
           npm install
           mkdir -p cypress/reports
 
@@ -60,7 +60,7 @@ jobs:
 
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: 'BNE_CIA_cypress/cypress/reports'
+          PathtoPublish: 'Nome_Instituição_cypress/cypress/reports'
           ArtifactName: 'CypressReport_$(System.JobPositionInPhase)'
           publishLocation: 'Container'
 
@@ -102,7 +102,7 @@ jobs:
           <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>📊 Relatório Consolidado - Cypress BNE</title>
+              <title>📊 Relatório Consolidado - Cypress Nome_Instituição</title>
               <style>
                   * { margin: 0; padding: 0; box-sizing: border-box; }
                   body { 

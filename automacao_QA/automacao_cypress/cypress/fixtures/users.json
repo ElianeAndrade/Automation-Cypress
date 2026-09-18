@@ -1,0 +1,10 @@
+{
+  "usuario_valido": {
+    "email": "iraima6162@uorak.com",
+    "senha": "Nome_Instituição321"
+  },
+  "usuario_invalido": {
+    "email": "email@errado.com",
+    "senha": "123456"
+  }
+}
